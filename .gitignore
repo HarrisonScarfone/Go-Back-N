@@ -1,0 +1,5 @@
+# dont need my vscode settings
+.vscode
+
+# dont need cache files
+*.pyc
