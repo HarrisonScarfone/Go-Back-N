@@ -1,6 +1,6 @@
 # Go-Back-N
 
-A client/server model implementing Go-Back-N transmission protocol.
+A client/server model implementing Go-Back-N transmission protocol. This is built to be a demo for a class project.
 
 The event loop of `client.py` uses `epoll` and therefore needs to be run on a system that supports `epoll`.
 
