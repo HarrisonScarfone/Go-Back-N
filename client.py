@@ -41,8 +41,6 @@ class Client:
                 return
 
             try:
-                # NOTE: We don't send on EPOLLOUT because we have a custom defined
-                #       buffer/buffer frames for easy visualization and project requirements.
                 self._send()
 
                 events = epoll.poll(timeout=self._timeout_after_seconds)
@@ -83,7 +81,9 @@ class Client:
 
             # NOTE: This .sendto could EAGAIN or EWOULDBLOCK but its essentially prevented
             #       with the custom defined buffer and buffer frames, so we won't catch the 
-            #       EnvironmentError that would be raised.
+            #       EnvironmentError that would be raised. We could have transmitted on EPOLLOUT
+            #       but our custom defined buffer makes that difficult to do and would prevent
+            #       other functionality we want to see for the project.
             _ = self._sock.sendto(self._encode(self._buffer[self._to_send]), self._server_address)
 
             print(f"\nSent: {self._buffer[self._to_send]}")
