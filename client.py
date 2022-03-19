@@ -23,10 +23,14 @@ class Client:
         self._consecutive_timeouts_maximum = max_timeouts
         self._consecutive_timeouts = 0
 
-    def run(self) -> None:
+    def transmit(self) -> None:
         self._sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        # NOTE: The socket can be non-blocking since we are monitoring system events manually.
         self._sock.setblocking(0)
 
+        # NOTE: epoll is a utility for monitoring OS events. The code as is
+        #       will not run on a windows environment, or any other environment
+        #       that does not support epoll.
         epoll = select.epoll()
         epoll.register(self._sock.fileno(), select.EPOLLIN)
 
@@ -37,10 +41,14 @@ class Client:
                 return
 
             try:
+                # NOTE: We don't send on EPOLLOUT because we have a custom defined
+                #       buffer/buffer frames for easy visualization and project requirements.
                 self._send()
 
                 events = epoll.poll(timeout=self._timeout_after_seconds)
 
+                # NOTE: Since events is a list, a [] indicates no event on the sockets file
+                #       descriptor inside of the timeout window
                 if not events:
                     raise TimeoutError()
 
@@ -56,6 +64,8 @@ class Client:
                     print('Maximum consecutive timeouts occurred. Ending transmission.')
                     return
 
+                # NOTE: Moving the transmit window buffer frame pointers here is what triggers
+                #       the retransmit of the window.
                 self._to_send = self._pending_ack
 
     def populate_transmission_buffer(self) -> None:
@@ -70,6 +80,10 @@ class Client:
 
     def _send(self) -> None:
         while self._to_send < len(self._buffer) and self._to_send - self._pending_ack < self._window:
+
+            # NOTE: This .sendto could EAGAIN or EWOULDBLOCK but its essentially prevented
+            #       with the custom defined buffer and buffer frames, so we won't catch the 
+            #       EnvironmentError that would be raised.
             _ = self._sock.sendto(self._encode(self._buffer[self._to_send]), self._server_address)
 
             print(f"\nSent: {self._buffer[self._to_send]}")
@@ -81,6 +95,7 @@ class Client:
         data, _ = self._sock.recvfrom(4096)
         received_packet = self._decode(data)
 
+        # NOTE: the guard clause covers the potentially null socket read
         if data:
             self._consecutive_timeouts = 0
             current_ack = int(received_packet[str(int(PacketFields.SEQUENCE_NUMBER))])
@@ -132,4 +147,4 @@ class Client:
 if __name__ == '__main__':
     client = Client()
     client.populate_transmission_buffer()
-    client.run()
+    client.transmit()

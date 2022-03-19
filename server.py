@@ -17,7 +17,8 @@ class Server:
         self.buffer = []
         self.next_ack_expecting = 0
 
-        # needed for error
+        # NOTE: We need to set a few more variables in order to introduce
+        #       artificial errors requested in the project description.
         self.need_to_show_ack_error = True
         self.need_to_show_timeout_error = True
         self.ack_packet_error_number = ACK_ERROR_BUFFER_FRAME
@@ -28,6 +29,8 @@ class Server:
         print(f"\nStarting up on {self.address} port {self.port}\n")
 
         try:
+            # NOTE: This socket will stay blocking as the protocol calls for a
+            #       synchronous server.
             sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             sock.bind(server_address)
         except socket.error as error:
@@ -96,6 +99,8 @@ class Server:
     def _handle_data_packet(self, packet) -> json:
         ack_number = int(packet[self._as_string_key(PacketFields.SEQUENCE_NUMBER)])
 
+        # NOTE: If we receive a packet sequence number we are not expecting it is discarded and not
+        #       added to our receive buffer.
         if self.next_ack_expecting == packet[self._as_string_key(PacketFields.SEQUENCE_NUMBER)]:
             print(f"\nAdding data to buffer from frame: {self.next_ack_expecting}\n")
             print(f"current buffer: {self.buffer}")
@@ -115,19 +120,20 @@ class Server:
         self.buffer = []
         self.next_ack_expecting = 0
 
-        # need to reset our error flags as well
+        # NOTE: The error flags need to be reset if we want to see artificial error on a
+        #       client retransmit without manually restarting the server.
         self.need_to_show_ack_error = True
         self.need_to_show_timeout_error = True
 
-    def _dump_buffer_to_file(self):
+    def _dump_buffer_to_file(self) -> None:
         with open('receive.txt', 'w+', encoding='UTF-8') as received_file:
             for frame in self.buffer:
                 received_file.write(f"{frame.capitalize()}\n")
 
-    def _as_string_key(self, val):
+    def _as_string_key(self, val) -> str:
         return str(int(val))
 
-    def _introduce_error(self, response):
+    def _introduce_error(self, response) -> json:
         error_type = response[PacketFields.SEQUENCE_NUMBER]
 
         if self.need_to_show_ack_error and error_type == self.ack_packet_error_number:
