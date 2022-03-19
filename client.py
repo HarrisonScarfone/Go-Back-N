@@ -11,7 +11,7 @@ class Client:
         self._pending_ack = 0
         self._to_send = 0
         self._window = 5
-        self._timeout_after_seconds = 2
+        self._timeout_after_seconds = 20000
 
         self._address = 'localhost'
         self._port = 10000
@@ -48,7 +48,7 @@ class Client:
                     if event & select.EPOLLIN:
                         self._receive()
 
-            except TimeoutError as error:
+            except TimeoutError:
                 print('Timeout detected, triggering retransmit of window.')
                 self._consecutive_timeouts += 1
 
