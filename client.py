@@ -7,20 +7,20 @@ from packet_fields import PacketFields
 from packet_types import PacketTypes
 
 class Client:
-    def __init__(self) -> None:
+    def __init__(self, window=5, timeout=2, max_timeouts=3, port=10000, address='localhost') -> None:
         self._pending_ack = 0
         self._to_send = 0
-        self._window = 5
-        self._timeout_after_seconds = 20000
+        self._window = window
+        self._timeout_after_seconds = timeout
 
-        self._address = 'localhost'
-        self._port = 10000
+        self._address = address
+        self._port = port
         self._server_address = (self._address, self._port)
 
         self._buffer = []
         self._sock = None
 
-        self._consecutive_timeouts_maximum = 3
+        self._consecutive_timeouts_maximum = max_timeouts
         self._consecutive_timeouts = 0
 
     def run(self) -> None:
