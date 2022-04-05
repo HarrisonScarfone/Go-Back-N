@@ -6,16 +6,19 @@ from packet_fields import PacketFields
 from packet_types import PacketTypes
 
 SEQ_ERROR_NUM = 99999
-ACK_ERROR_BUFFER_FRAME = 5
-TIMEOUT_ERROR_BUFFER_FRAME = 7
+ACK_ERROR_BUFFER_FRAME = 2
+TIMEOUT_ERROR_BUFFER_FRAME = 8
 
 class Server:
-    def __init__(self, port=10000, address='localhost') -> None:
+    def __init__(self, port=10000, address='localhost', window=5) -> None:
+        self.window = 5
         self.port = port
         self.address = address
 
         self.buffer = []
         self.next_ack_expecting = 0
+
+        self._exit_flag = False
 
         # NOTE: We need to set a few more variables in order to introduce
         #       artificial errors requested in the project description.
@@ -36,7 +39,7 @@ class Server:
         except socket.error as error:
             print('Error binding socket.', error)
 
-        while True:
+        while not self._exit_flag:
             data, address = sock.recvfrom(4096)
             print(f"\nreceived {len(data)} bytes from {address}\n")
             print(f"Expected: {self.next_ack_expecting}")
@@ -48,11 +51,10 @@ class Server:
                 continue
 
             response = self._handle_packet(decoded_data)
+            response = self._introduce_error(response)
 
             if not response:
-                continue
-
-            response = self._introduce_error(response)
+                continue            
 
             sent = sock.sendto(self._encode(response), address)
 
@@ -94,6 +96,7 @@ class Server:
     def _handle_stop_packet(self, packet) -> json:
         ack_number = int(packet[self._as_string_key(PacketFields.SEQUENCE_NUMBER)])
         self._dump_buffer_to_file()
+        self._exit_flag = True
         return self._build_ack_response(ack_number)
 
     def _handle_data_packet(self, packet) -> json:
@@ -101,13 +104,13 @@ class Server:
 
         # NOTE: If we receive a packet sequence number we are not expecting it is discarded and not
         #       added to our receive buffer.
-        if self.next_ack_expecting == packet[self._as_string_key(PacketFields.SEQUENCE_NUMBER)]:
+        if self.next_ack_expecting == ack_number:
             print(f"\nAdding data to buffer from frame: {self.next_ack_expecting}\n")
             print(f"current buffer: {self.buffer}")
             self.buffer.append(packet[self._as_string_key(PacketFields.DATA)])
             self.next_ack_expecting += 1
 
-        return self._build_ack_response(ack_number)
+        return self._build_ack_response(self.next_ack_expecting - 1)
 
     def _build_ack_response(self, ack_number) -> json:
         return {
@@ -144,6 +147,7 @@ class Server:
             self.need_to_show_timeout_error = False
             print('\nIntroducing timeout error.\n')
             time.sleep(3)
+            response = None
 
         return response
 

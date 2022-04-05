@@ -104,9 +104,11 @@ class Client:
             print(f"received_packet: {received_packet}")
             print(f"Sequence Number: {current_ack}")
 
-            if current_ack > self._pending_ack:
+            if current_ack > self._pending_ack and current_ack > len(self._buffer) - 1:
                 print(f"\nACK sequencing error detected. Resending frame starting at {self._pending_ack}.\n")
                 self._to_send = self._pending_ack
+            elif current_ack > self._pending_ack:
+                self._pending_ack = current_ack + 1
             else:
                 self._pending_ack = current_ack + 1
 
