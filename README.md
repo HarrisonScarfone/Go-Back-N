@@ -4,6 +4,7 @@ A client/server model implementing Go-Back-N transmission protocol. This is buil
 
 > *Potential Compatibility Issue*: **The event loop of `client.py` uses `epoll` and therefore needs to be run on a system that supports `epoll`.**
 
+---
 ## Running the Demo
 To run the demo, in one terminal, run:
 ```python3
@@ -25,8 +26,12 @@ python3 client.py > client_output.txt
 
 Watch the transmission of ten lower case names from `transmit.txt` to a server, which then spits out the list of capitalized names in `receive.txt`.
 
+---
+
 ## Custom Packets
 In order to make it a bit easier to visualize, the project encodes and decodes json based custom packets with their `fields` and `types` defined as `IntEnum` in `packet_fields.py` and `packet_types.py`.
+
+---
 
 > *Note*: The scripts are setup for protocol demonstration purposes and introduce errors at specified server buffer indices. As required by assignment specs, it introduces 2 errors per 10 frames - a timeout error and a ACK sequencing error.
 
