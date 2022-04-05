@@ -1,0 +1,153 @@
+
+Sent: {<PacketFields.TYPE: 1>: <PacketTypes.START: 1>, <PacketFields.SEQUENCE_NUMBER: 4>: 0}
+Timestamping at 1649130084.8104918
+
+
+Sent: {<PacketFields.TYPE: 1>: <PacketTypes.DATA: 3>, <PacketFields.SEQUENCE_NUMBER: 4>: 1, <PacketFields.DATA: 2>: 'randy'}
+Timestamping at 1649130084.810529
+
+
+Sent: {<PacketFields.TYPE: 1>: <PacketTypes.DATA: 3>, <PacketFields.SEQUENCE_NUMBER: 4>: 2, <PacketFields.DATA: 2>: 'kyle'}
+Timestamping at 1649130084.8105564
+
+
+Sent: {<PacketFields.TYPE: 1>: <PacketTypes.DATA: 3>, <PacketFields.SEQUENCE_NUMBER: 4>: 3, <PacketFields.DATA: 2>: 'stan'}
+Timestamping at 1649130084.810581
+
+
+Sent: {<PacketFields.TYPE: 1>: <PacketTypes.DATA: 3>, <PacketFields.SEQUENCE_NUMBER: 4>: 4, <PacketFields.DATA: 2>: 'cartman'}
+Timestamping at 1649130084.8106062
+
+
+Looking for ACK for 0
+received_packet: {'1': 4, '4': 0}
+Sequence Number: 0
+
+Sent: {<PacketFields.TYPE: 1>: <PacketTypes.DATA: 3>, <PacketFields.SEQUENCE_NUMBER: 4>: 5, <PacketFields.DATA: 2>: 'butters'}
+Timestamping at 1649130084.8106742
+
+
+Looking for ACK for 1
+received_packet: {'1': 4, '4': 1}
+Sequence Number: 1
+
+Sent: {<PacketFields.TYPE: 1>: <PacketTypes.DATA: 3>, <PacketFields.SEQUENCE_NUMBER: 4>: 6, <PacketFields.DATA: 2>: 'kenny'}
+Timestamping at 1649130084.8107154
+
+
+Looking for ACK for 2
+received_packet: {'1': 4, '4': 99999}
+Sequence Number: 99999
+
+ACK sequencing error detected. Resending frame starting at 2.
+
+
+Sent: {<PacketFields.TYPE: 1>: <PacketTypes.DATA: 3>, <PacketFields.SEQUENCE_NUMBER: 4>: 2, <PacketFields.DATA: 2>: 'kyle'}
+Timestamping at 1649130084.8107548
+
+
+Sent: {<PacketFields.TYPE: 1>: <PacketTypes.DATA: 3>, <PacketFields.SEQUENCE_NUMBER: 4>: 3, <PacketFields.DATA: 2>: 'stan'}
+Timestamping at 1649130084.8107781
+
+
+Sent: {<PacketFields.TYPE: 1>: <PacketTypes.DATA: 3>, <PacketFields.SEQUENCE_NUMBER: 4>: 4, <PacketFields.DATA: 2>: 'cartman'}
+Timestamping at 1649130084.8108008
+
+
+Sent: {<PacketFields.TYPE: 1>: <PacketTypes.DATA: 3>, <PacketFields.SEQUENCE_NUMBER: 4>: 5, <PacketFields.DATA: 2>: 'butters'}
+Timestamping at 1649130084.8108256
+
+
+Sent: {<PacketFields.TYPE: 1>: <PacketTypes.DATA: 3>, <PacketFields.SEQUENCE_NUMBER: 4>: 6, <PacketFields.DATA: 2>: 'kenny'}
+Timestamping at 1649130084.810849
+
+
+Looking for ACK for 2
+received_packet: {'1': 4, '4': 3}
+Sequence Number: 3
+
+Sent: {<PacketFields.TYPE: 1>: <PacketTypes.DATA: 3>, <PacketFields.SEQUENCE_NUMBER: 4>: 7, <PacketFields.DATA: 2>: 'wendy'}
+Timestamping at 1649130084.8108885
+
+
+Sent: {<PacketFields.TYPE: 1>: <PacketTypes.DATA: 3>, <PacketFields.SEQUENCE_NUMBER: 4>: 8, <PacketFields.DATA: 2>: 'bebe'}
+Timestamping at 1649130084.810913
+
+
+Looking for ACK for 4
+received_packet: {'1': 4, '4': 4}
+Sequence Number: 4
+
+Sent: {<PacketFields.TYPE: 1>: <PacketTypes.DATA: 3>, <PacketFields.SEQUENCE_NUMBER: 4>: 9, <PacketFields.DATA: 2>: 'token'}
+Timestamping at 1649130084.81095
+
+
+Looking for ACK for 5
+received_packet: {'1': 4, '4': 5}
+Sequence Number: 5
+
+Sent: {<PacketFields.TYPE: 1>: <PacketTypes.DATA: 3>, <PacketFields.SEQUENCE_NUMBER: 4>: 10, <PacketFields.DATA: 2>: 'jimbo'}
+Timestamping at 1649130084.8109865
+
+
+Looking for ACK for 6
+received_packet: {'1': 4, '4': 6}
+Sequence Number: 6
+
+Sent: {<PacketFields.TYPE: 1>: <PacketTypes.STOP: 2>, <PacketFields.SEQUENCE_NUMBER: 4>: 11}
+Timestamping at 1649130084.811022
+
+
+Looking for ACK for 7
+received_packet: {'1': 4, '4': 6}
+Sequence Number: 6
+
+Looking for ACK for 7
+received_packet: {'1': 4, '4': 6}
+Sequence Number: 6
+
+Looking for ACK for 7
+received_packet: {'1': 4, '4': 6}
+Sequence Number: 6
+
+Looking for ACK for 7
+received_packet: {'1': 4, '4': 6}
+Sequence Number: 6
+
+Looking for ACK for 7
+received_packet: {'1': 4, '4': 6}
+Sequence Number: 6
+
+Looking for ACK for 7
+received_packet: {'1': 4, '4': 7}
+Sequence Number: 7
+Timeout detected, triggering retransmit of window.
+
+Sent: {<PacketFields.TYPE: 1>: <PacketTypes.DATA: 3>, <PacketFields.SEQUENCE_NUMBER: 4>: 8, <PacketFields.DATA: 2>: 'bebe'}
+Timestamping at 1649130086.8125434
+
+
+Sent: {<PacketFields.TYPE: 1>: <PacketTypes.DATA: 3>, <PacketFields.SEQUENCE_NUMBER: 4>: 9, <PacketFields.DATA: 2>: 'token'}
+Timestamping at 1649130086.8126976
+
+
+Sent: {<PacketFields.TYPE: 1>: <PacketTypes.DATA: 3>, <PacketFields.SEQUENCE_NUMBER: 4>: 10, <PacketFields.DATA: 2>: 'jimbo'}
+Timestamping at 1649130086.8128262
+
+
+Sent: {<PacketFields.TYPE: 1>: <PacketTypes.STOP: 2>, <PacketFields.SEQUENCE_NUMBER: 4>: 11}
+Timestamping at 1649130086.8129406
+
+
+Looking for ACK for 8
+received_packet: {'1': 4, '4': 9}
+Sequence Number: 9
+
+Looking for ACK for 10
+received_packet: {'1': 4, '4': 10}
+Sequence Number: 10
+
+Looking for ACK for 11
+received_packet: {'1': 4, '4': 11}
+Sequence Number: 11
+Stopping transmit, closing socket.
